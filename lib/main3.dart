@@ -27,14 +27,16 @@ class CircularProgressIndicatorAppState
   @override
   void initState() {
     super.initState();
-    _loading = true;
-    _updateProgress();
+    _loading = false;
     _progressValue = 0.0;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Flutter Circular Progress Bar"),
+      ),
       body: Center(
         child: Container(
           padding: EdgeInsets.all(14.0),
@@ -56,9 +58,18 @@ class CircularProgressIndicatorAppState
                     //Text('${(_progressValue * 100).round()}%'),
                   ],
                 )
-              : //Text("Press button for downloading", style: TextStyle(fontSize: 25))
-              SecondScreen(),
+              : Text("Press button for downloading",
+                  style: TextStyle(fontSize: 25)),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            _loading = !_loading;
+            _updateProgress();
+          });
+        },
+        child: Icon(Icons.cloud_download),
       ),
     );
   }
@@ -77,19 +88,5 @@ class CircularProgressIndicatorAppState
         }
       });
     });
-  }
-}
-
-class SecondScreen extends StatefulWidget {
-  @override
-  _SecondScreenState createState() => _SecondScreenState();
-}
-
-class _SecondScreenState extends State<SecondScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text('I am second screen')),
-    );
   }
 }
